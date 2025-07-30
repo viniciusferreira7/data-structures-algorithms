@@ -1,22 +1,24 @@
 import { describe, it, expect } from "bun:test";
-import { reverseWordsInAString } from './reverse-words-in-a-string';
+import { reverseWords } from './reverse-words-in-a-string';
 
-describe("reverseWordsInAString", () => {
-  it("should reverse words correctly (example 1)", () => {
-    const input = "the sky is blue";
-    const output = reverseWordsInAString(input);
-    expect(output).toBe("blue is sky the");
+describe("reverse words", () => {
+  it("should reverse each word in the sentence (example 1)", () => {
+    const input = "Let's take LeetCode contest";
+    const output = reverseWords(input);
+    expect(output).toBe("s'teL ekat edoCteeL tsetnoc");
   });
 
-  it("should trim spaces (example 2)", () => {
-    const input = "  hello world  ";
-    const output = reverseWordsInAString(input);
-    expect(output).toBe("world hello");
+  it("should reverse words correctly (example 2)", () => {
+    const input = "Mr Ding";
+    const output = reverseWords(input);
+    expect(output).toBe("rM gniD");
   });
 
-  it("should handle multiple spaces between words (example 3)", () => {
-    const input = "a good   example";
-    const output = reverseWordsInAString(input);
-    expect(output).toBe("example good a");
+  it("should return an empty string when input is empty", () => {
+    expect(reverseWords("")).toBe("");
+  });
+
+  it("should handle a single word", () => {
+    expect(reverseWords("hello")).toBe("olleh");
   });
 });
