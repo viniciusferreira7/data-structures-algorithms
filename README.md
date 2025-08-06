@@ -57,14 +57,28 @@ export function reverseWords(str: string): string {
 
   let left = 0, right = 0;
 
-  const arr: string[] = []
+  let res = ''
 
-  while (right < str.length){
-    right
+  while(right < str.length){
+    if(str[right] !== ' ')  right++
+
+    else {
+      for(let i = right; i >= left; i--)  res += str[i]
+
+      right++
+
+      left = right
+    }
+ 
   }
 
-  return arr.join()
+  res += ' '
 
+  for(let i = right - 1; i >= left; i--) {
+     res += str[i]
+  }
+  
+  return res.trim()
 }
 ````
 
@@ -107,6 +121,4 @@ describe("reverse words", () => {
 ## 📄 License
 
 MIT License
-
-```
 

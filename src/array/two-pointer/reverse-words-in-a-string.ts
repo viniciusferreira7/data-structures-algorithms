@@ -20,10 +20,27 @@ export function reverseWords(str: string): string {
 
   let left = 0, right = 0;
 
-  const arr: string[] = []
+  let res = ''
 
-  //TODO: 
+  while(right < str.length){
+    if(str[right] !== ' ')  right++
 
-  return arr.join()
+    else {
+      for(let i = right; i >= left; i--)  res += str[i]
+
+      right++
+
+      left = right
+    }
+ 
+  }
+
+  res += ' '
+
+  for(let i = right - 1; i >= left; i--) {
+     res += str[i]
+  }
+  
+  return res.trim()
 
 }
