@@ -7,7 +7,7 @@ A collection of algorithm implementations in **TypeScript**, focusing on clarity
 ## 📚 Algorithms
 
 * [🔗 **Two Pointers**](https://github.com/viniciusferreira7/data-structures-algorithms/tree/main/src/array/two-pointer)
-* [🔗 ** **Binary Search****](https://github.com/viniciusferreira7/data-structures-algorithms/tree/main/src/array/two-pointer)
+* [🔗 **Binary Search**](https://github.com/viniciusferreira7/data-structures-algorithms/tree/main/src/array/two-pointer)
 ---
 
 ## 🛠 Tech Stack
