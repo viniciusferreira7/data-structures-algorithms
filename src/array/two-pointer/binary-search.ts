@@ -18,5 +18,26 @@
  * // Returns: -1
  */
 export function binarySearch(arr: number[], target: number): number {
-  
+  let l =0, r = arr.length - 1
+  let mid = arr.length / 2 | 0
+
+  if(arr.length === 0) return -1 
+
+  if(arr[l] === target) return l
+  if(arr[r] === target) return r
+
+  while (l < r){
+    if(arr[mid] === target){
+      return mid
+    } else if (mid < target){
+      r = mid - 1
+      mid = (l + r) / 2 | 0
+    } else if (mid > target){
+      l = mid + 1
+      mid = (r - l) / 2 | 0
+
+    }
+  }
+
+  return -1
 }
