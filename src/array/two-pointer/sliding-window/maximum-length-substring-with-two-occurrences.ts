@@ -23,25 +23,25 @@ export function maximumLengthSubstringWithTwoOccurrences(s: string): string {
 let l = 0, r = 0
 
 const map = new Map()
-  
-let maxLength = 0
 
+let maxLength = 0 
+  
 while(r < s.length){
   if(!map.has(s[r])){
     map.set(s[r], 1)
   } else {
-    map.set(s[r], map.get(s[r])  + 1)
+    map.set(s[r], map.get(s[r]) + 1)
   }
 
-  while(map.get(s[r]) === 2){
-
+  while(map.get(s[r]) >= 3){
+    map.set(s[l], map.get(s[l]) - 1)
+    l++
   }
+
+  maxLength = Math.max(maxLength, (r - l) + 1 )
+  
+ r++
 }
-
-
-
-
- console.log({map, l, r})
 
 
  return s.substring(l, r)

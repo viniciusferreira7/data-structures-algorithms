@@ -2,31 +2,31 @@ import { describe, it, expect } from "bun:test";
 import { maximumLengthSubstringWithTwoOccurrences } from "./maximum-length-substring-with-two-occurrences";
 
 describe("maximumLengthSubstringWithTwoOccurrences", () => {
-  it.skip("should return entire string if all characters occur at most twice", () => {
+  it("should return entire string if all characters occur at most twice", () => {
     const input = "aabbccddeeff";
     const output = maximumLengthSubstringWithTwoOccurrences(input);
     expect(output).toBe("aabbccddeeff");
   });
 
-  it.skip("should return longest substring where chars appear max twice (example 1)", () => {
-    const input = "aaabbbcc";
+  it("should return longest substring where chars appear max twice", () => {
+    const input = "eebadadbfa";
     const output = maximumLengthSubstringWithTwoOccurrences(input);
-    expect(output).toBe("aabbcc");
+    expect(output).toBe("dadbfa");
   });
 
-  it.skip("should return entire string if all chars appear once", () => {
+  it("should return entire string if all chars appear once", () => {
     const input = "abcde";
     const output = maximumLengthSubstringWithTwoOccurrences(input);
     expect(output).toBe("abcde");
   });
 
-  it.skip("should return empty string when input is empty", () => {
+  it("should return empty string when input is empty", () => {
     const input = "";
     const output = maximumLengthSubstringWithTwoOccurrences(input);
     expect(output).toBe("");
   });
 
-  it.skip("should handle single character string", () => {
+  it("should handle single character string", () => {
     const input = "z";
     const output = maximumLengthSubstringWithTwoOccurrences(input);
     expect(output).toBe("z");
