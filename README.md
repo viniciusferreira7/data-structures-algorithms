@@ -1,3 +1,5 @@
+# ⚠️ WIP
+
 # 🧠 Algorithms Playground
 
 A collection of algorithm implementations in **TypeScript**, focusing on clarity, performance, and well-known problem-solving patterns.
@@ -9,6 +11,7 @@ A collection of algorithm implementations in **TypeScript**, focusing on clarity
 * [🔗 **Two Pointers**](https://github.com/viniciusferreira7/data-structures-algorithms/tree/main/src/array/two-pointer)
 * [🔗 **Binary Search**](https://github.com/viniciusferreira7/data-structures-algorithms/tree/main/src/array/two-pointer)
 * [🔗 **Sliding window**](https://github.com/viniciusferreira7/data-structures-algorithms/tree/main/src/array/two-pointer/sliding-window)
+* [🔗 **Exponential search**](https://github.com/viniciusferreira7/data-structures-algorithms/tree/main/src/array/two-pointer/exponential-search)
 ---
 
 ## 🛠 Tech Stack
