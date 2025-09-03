@@ -1,4 +1,3 @@
-
 /**
  * Reverses each word in a given string while maintaining the original word order.
  *
@@ -17,30 +16,27 @@
  * // Returns: "rM gniD"
  */
 export function reverseWords(str: string): string {
+	let left = 0,
+		right = 0;
 
-  let left = 0, right = 0;
+	let res = "";
 
-  let res = ''
+	while (right < str.length) {
+		if (str[right] !== " ") right++;
+		else {
+			for (let i = right; i >= left; i--) res += str[i];
 
-  while(right < str.length){
-    if(str[right] !== ' ')  right++
+			right++;
 
-    else {
-      for(let i = right; i >= left; i--)  res += str[i]
+			left = right;
+		}
+	}
 
-      right++
+	res += " ";
 
-      left = right
-    }
- 
-  }
+	for (let i = right - 1; i >= left; i--) {
+		res += str[i];
+	}
 
-  res += ' '
-
-  for(let i = right - 1; i >= left; i--) {
-     res += str[i]
-  }
-  
-  return res.trim()
-
+	return res.trim();
 }

@@ -1,0 +1,43 @@
+{
+	"files": {
+		"ignoreUnknown": false,
+		"includes": ["src/**", "test/**"]
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"correctness": {
+				"noNodejsModules": "off"
+			},
+			"recommended": false,
+			"complexity": {
+				"noForEach": "off",
+				"noStaticOnlyClass": "off",
+				"noUselessSwitchCase": "error",
+				"useFlatMap": "error"
+			},
+			"style": {
+				"noNegationElse": "off",
+				"useForOf": "error",
+				"useNodejsImportProtocol": "error",
+				"useNumberNamespace": "error"
+			},
+			"suspicious": {
+				"noDoubleEquals": "error",
+				"noThenProperty": "error",
+				"useIsArray": "error"
+			}
+		}
+	},
+	"javascript": {
+		"globals": ["Global1"],
+		"parser": {
+			"unsafeParameterDecoratorsEnabled": true
+		}
+	},
+	"overrides": [
+		{
+			"linter": { "rules": { "suspicious": { "noDoubleEquals": "off" } } }
+		}
+	]
+}

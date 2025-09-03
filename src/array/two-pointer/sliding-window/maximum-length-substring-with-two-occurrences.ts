@@ -20,29 +20,29 @@
  * // Returns: "abcde" (all chars occur once)
  */
 export function maximumLengthSubstringWithTwoOccurrences(s: string): string {
-let l = 0, r = 0
+	let l = 0,
+		r = 0;
 
-const map = new Map()
+	const map = new Map();
 
-let maxLength = 0 
-  
-while(r < s.length){
-  if(!map.has(s[r])){
-    map.set(s[r], 1)
-  } else {
-    map.set(s[r], map.get(s[r]) + 1)
-  }
+	let maxLength = 0;
 
-  while(map.get(s[r]) >= 3){
-    map.set(s[l], map.get(s[l]) - 1)
-    l++
-  }
+	while (r < s.length) {
+		if (!map.has(s[r])) {
+			map.set(s[r], 1);
+		} else {
+			map.set(s[r], map.get(s[r]) + 1);
+		}
 
-  maxLength = Math.max(maxLength, (r - l) + 1 )
-  
- r++
-}
+		while (map.get(s[r]) >= 3) {
+			map.set(s[l], map.get(s[l]) - 1);
+			l++;
+		}
 
+		maxLength = Math.max(maxLength, r - l + 1);
 
- return s.substring(l, r)
+		r++;
+	}
+
+	return s.substring(l, r);
 }

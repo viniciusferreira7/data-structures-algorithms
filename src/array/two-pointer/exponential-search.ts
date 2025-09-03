@@ -21,15 +21,16 @@
  * // Returns: -1
  */
 export function exponentialSearch(arr: number[], target: number): number {
-  let l = 0, r = 0
+	const l = 0,
+		r = 0;
 
-  if(arr[l] === target) return l
+	if (arr[l] === target) return l;
 
-  if(arr.at(-1) === target) return arr.length - 1
+	if (arr.at(-1) === target) return arr.length - 1;
 
-  // TODO: Complete this algorithm
+	// TODO: Complete this algorithm
 
+	// while()
 
-  return -1
-
+	return -1;
 }
