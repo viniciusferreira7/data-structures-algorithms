@@ -17,9 +17,14 @@
  * binarySearch([1, 3, 5, 7, 9], 4);
  * // Returns: -1
  */
-export function binarySearch(arr: number[], target: number): number {
-	let l = 0,
-		r = arr.length - 1;
+export function binarySearch(
+	arr: number[],
+	target: number,
+	left?: number,
+	right?: number,
+): number {
+	let l = left ? left : 0,
+		r = right ? right : arr.length - 1;
 	let mid = (arr.length / 2) | 0;
 
 	if (arr.length === 0) return -1;

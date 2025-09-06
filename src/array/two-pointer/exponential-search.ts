@@ -1,3 +1,5 @@
+import { binarySearch } from "./binary-search";
+
 /**
  * Performs an exponential search on a sorted array to find the index of the target value.
  *
@@ -21,16 +23,24 @@
  * // Returns: -1
  */
 export function exponentialSearch(arr: number[], target: number): number {
-	const l = 0,
-		r = 0;
+	let i = 0;
 
-	if (arr[l] === target) return l;
+	if (arr[i] === target) return i;
 
 	if (arr.at(-1) === target) return arr.length - 1;
 
-	// TODO: Complete this algorithm
+	i = 1;
 
-	// while()
+	while (arr[i] < target || i < arr.length) {
+		i *= 2;
+	}
 
-	return -1;
+	if (arr[i] === target) return i;
+
+	return binarySearch(
+		arr,
+		target,
+		(i / 2) | 0,
+		i > arr.length ? arr.length - 1 : i,
+	);
 }
