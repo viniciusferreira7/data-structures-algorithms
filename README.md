@@ -12,6 +12,7 @@ A collection of algorithm implementations in **TypeScript**, focusing on clarity
 * [🔗 **Binary Search**](https://github.com/viniciusferreira7/data-structures-algorithms/tree/main/src/array/two-pointer)
 * [🔗 **Sliding window**](https://github.com/viniciusferreira7/data-structures-algorithms/tree/main/src/array/two-pointer/sliding-window)
 * [🔗 **Exponential search**](https://github.com/viniciusferreira7/data-structures-algorithms/tree/main/src/array/two-pointer/exponential-search)
+* [🔗 **Hashmap**](https://github.com/viniciusferreira7/data-structures-algorithms/tree/main/src/array/two-pointer/hashmap)
 ---
 
 ## 🛠 Tech Stack
