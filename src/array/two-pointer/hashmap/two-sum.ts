@@ -29,7 +29,6 @@ export function twoSum(arr: number[], target: number): number[] {
 		if (!!value) {
 			return value;
 		}
-
 		for (let r = 1; r < arr.length; r++) {
 			if (l !== r) {
 				const sum = arr[l] + arr[r];
