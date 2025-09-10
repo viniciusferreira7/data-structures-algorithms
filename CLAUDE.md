@@ -53,4 +53,4 @@ src/
 
 ## Important notes
 
-- Never use emojis on this projects.
+- Never use emojis on this projects only on README.md, it`s allowed.
