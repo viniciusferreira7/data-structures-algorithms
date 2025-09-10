@@ -18,7 +18,7 @@
 			},
 			"style": {
 				"noNegationElse": "off",
-				"useForOf": "error",
+				"useForOf": "off",
 				"useNodejsImportProtocol": "error",
 				"useNumberNamespace": "error"
 			},

@@ -21,4 +21,20 @@
  * containsNearbyDuplicate([1, 2, 3, 1, 2, 3], 2);
  * // Returns: false (duplicates exist but not within distance 2)
  */
-export function containsNearbyDuplicate(nums: number[], k: number): boolean {}
+export function containsNearbyDuplicate(nums: number[], k: number): boolean {
+	const window = new Set<number>();
+
+	for (let i = 0; i < nums.length; i++) {
+		if (window.has(nums[i])) {
+			return true;
+		}
+
+		window.add(nums[i]);
+
+		if (window.size > k) {
+			window.delete(nums[i - k]);
+		}
+	}
+
+	return false;
+}
