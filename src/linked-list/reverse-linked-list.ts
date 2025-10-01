@@ -21,4 +21,19 @@ import type { ListNode } from "./list-node";
  * Time: O(n) — each node is visited once.
  * Space: O(1) — reversal is done in-place.
  */
-export function reverseLinkedList(head: ListNode | null): ListNode | null {}
+export function reverseLinkedList(head: ListNode | null): ListNode | null {
+	let nextNode: ListNode | null = null;
+
+	let newList: ListNode | null = null;
+
+	while (head) {
+		nextNode = head.next;
+		head.next = newList;
+
+		newList = head;
+
+		head = nextNode;
+	}
+
+	return newList;
+}

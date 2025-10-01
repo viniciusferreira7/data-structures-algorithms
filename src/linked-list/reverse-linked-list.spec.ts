@@ -1,3 +1,4 @@
+import { describe, expect, it } from "bun:test";
 import { ListNode } from "./list-node";
 import { reverseLinkedList } from "./reverse-linked-list";
 
@@ -6,13 +7,12 @@ function arrayToLinkedList(values: number[]): ListNode | null {
 	const head = new ListNode(values[0], null, null);
 	let current = head;
 	for (let i = 1; i < values.length; i++) {
-		current.next = new ListNode(values[i], null, null);
+		current.next = new ListNode(values[i], null, current);
 		current = current.next;
 	}
 	return head;
 }
 
-// helper para converter linked list → array
 function linkedListToArray(head: ListNode | null): number[] {
 	const result: number[] = [];
 	let current = head;
@@ -20,6 +20,7 @@ function linkedListToArray(head: ListNode | null): number[] {
 		result.push(current.value);
 		current = current.next;
 	}
+
 	return result;
 }
 
