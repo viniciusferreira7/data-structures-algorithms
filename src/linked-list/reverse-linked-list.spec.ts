@@ -1,28 +1,7 @@
 import { describe, expect, it } from "bun:test";
-import { ListNode } from "./list-node";
 import { reverseLinkedList } from "./reverse-linked-list";
-
-function arrayToLinkedList(values: number[]): ListNode | null {
-	if (values.length === 0) return null;
-	const head = new ListNode(values[0], null, null);
-	let current = head;
-	for (let i = 1; i < values.length; i++) {
-		current.next = new ListNode(values[i], null, current);
-		current = current.next;
-	}
-	return head;
-}
-
-function linkedListToArray(head: ListNode | null): number[] {
-	const result: number[] = [];
-	let current = head;
-	while (current) {
-		result.push(current.value);
-		current = current.next;
-	}
-
-	return result;
-}
+import { arrayToLinkedList } from "./utils/array-to-linked-list";
+import { linkedListToArray } from "./utils/linked-list-to-array";
 
 describe("reverseLinkedList", () => {
 	it("should reverse a list with multiple nodes", () => {
