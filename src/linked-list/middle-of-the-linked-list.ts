@@ -25,4 +25,15 @@ import type { ListNode } from "./list-node";
  * @param head - The head node of the singly linked list.
  * @returns The middle node (or the second middle node if the list has even length), or `null` if the list is empty.
  */
-export function middleOfTheLinkedList(head: ListNode | null): ListNode | null {}
+export function middleOfTheLinkedList(head: ListNode | null): ListNode | null {
+	let ahead = head;
+
+	while (ahead && ahead.next) {
+		ahead = ahead.next;
+		ahead = ahead.next;
+
+		if (head) head = head?.next;
+	}
+
+	return head;
+}
