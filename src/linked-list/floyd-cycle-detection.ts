@@ -26,5 +26,16 @@ import type { ListNode } from "./list-node";
  * @returns `true` if the list contains a cycle, otherwise `false`.
  */
 export function FloydCycleDetection(head: ListNode | null): boolean {
+	const hashMap = new Map();
+
+	while (head && head.next) {
+		if (hashMap.has(head.value) && hashMap.get(head.value) === head.next)
+			return true;
+
+		hashMap.set(head.value, head.next);
+
+		head = head.next;
+	}
+
 	return false;
 }
