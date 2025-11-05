@@ -37,15 +37,23 @@ export function bubbleSort(arr: number[]): number[] {
 
 	let size = arr.length;
 
+	let isSorted = true;
+
 	for (const _value in arr) {
 		for (let i = 0; i <= size - 1; i++) {
 			if (arr[i] > arr[i + 1]) {
+				isSorted = false;
+
 				let a = arr[i + 1];
 				let b = arr[i];
 
 				arr.splice(i + 1, 1, b);
 				arr.splice(i, 1, a);
 			}
+		}
+
+		if (isSorted) {
+			return arr;
 		}
 	}
 
