@@ -14,7 +14,7 @@ import { ListNode } from "./list-node";
  *
  * @example
  * // Input: list1 = [], list2 = []
- * // Output: []
+ * // Output: null
  *
  * @example
  * // Input: list1 = [], list2 = [0]
