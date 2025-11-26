@@ -1,4 +1,38 @@
-import type { ListNode } from "../linked-list/list-node";
+import { ListNode } from "../linked-list/list-node";
+
+function findMiddle(head: ListNode) {
+	let slow: ListNode | null = head;
+	let fast = head.next;
+
+	while (fast && fast.next) {
+		slow = slow?.next ?? null;
+		fast = fast.next;
+		fast = fast.next;
+	}
+
+	return slow;
+}
+
+function mergeLinkedList(list1: ListNode | null, list2: ListNode | null) {
+	if (!list1 && !list2) return null;
+	if (!list1) return list2;
+	if (!list2) return list1;
+
+	const head = new ListNode(0, null, null);
+	let tail = head;
+
+	while (list1 && list2) {
+		if (list1.value < list2.value) {
+			tail.next = list1;
+			list1 = list1.next;
+		} else {
+			tail.next = list2;
+			list2 = list2.next;
+		}
+
+		tail.next;
+	}
+}
 
 /**
  * Sorts a singly linked list in ascending order using the Merge Sort algorithm.
@@ -38,6 +72,10 @@ import type { ListNode } from "../linked-list/list-node";
  * @param linkedList - The head of the singly linked list to sort (or null if the list is empty).
  * @returns The head of the new linked list sorted in ascending order, or null if the input is null.
  */
-export function mergeSort(linkedList: ListNode | null): ListNode | null {
-	return linkedList;
+export function mergeSort(head: ListNode | null): ListNode | null {
+	if (!head) return head;
+
+	const middleNode = findMiddle(head);
+
+	return head;
 }
