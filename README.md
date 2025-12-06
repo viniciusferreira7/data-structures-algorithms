@@ -12,6 +12,7 @@ A collection of algorithm implementations in **TypeScript**, focusing on clarity
 ### Sorting Algorithms
 * [🔗 **Bubble Sort**](src/sorting/bubble-sort.ts) - Simple comparison-based sorting (O(n²) time, O(1) space)
 * [🔗 **Quick Sort**](src/sorting/quick-sort.ts) - Efficient divide-and-conquer sorting (O(n log n) average)
+* [🔗 **Merge Sort**](src/sorting/merge-sort.ts) - Stable divide-and-conquer sorting for linked lists (O(n log n) time, O(log n) space)
 
 ### Array & Searching Techniques
 
