@@ -1,11 +1,40 @@
 import { ListNode } from "../linked-list/list-node";
 
+/**
+ * Finds the middle node of a linked list using the slow and fast pointer technique.
+ *
+ * This function uses two pointers: a slow pointer that moves one node at a time,
+ * and a fast pointer that moves two nodes at a time. When the fast pointer reaches
+ * the end of the list, the slow pointer will be at the middle node.
+ *
+ * This is particularly useful for the divide step in Merge Sort, where we need to
+ * split the list into two halves.
+ *
+ * Time Complexity: O(n) where n is the number of nodes in the list.
+ * Space Complexity: O(1) as we only use two pointers.
+ *
+ * @param head - The head node of the linked list.
+ * @returns The middle node of the linked list. For lists with even length,
+ *          returns the first node of the second half.
+ *
+ * @example
+ * // For a list: 1 -> 2 -> 3 -> 4 -> 5
+ * // Returns node with value 3
+ * const middle = findMiddle(head);
+ *
+ * @example
+ * // For a list: 1 -> 2 -> 3 -> 4
+ * // Returns node with value 2
+ * const middle = findMiddle(head);
+ */
 function findMiddle(head: ListNode) {
-	let slow: ListNode | null = head;
+	let slow: ListNode = head;
 	let fast = head.next;
 
 	while (fast && fast.next) {
-		slow = slow?.next ?? null;
+		if (slow.next) {
+			slow = slow.next;
+		}
 		fast = fast.next;
 		fast = fast.next;
 	}
@@ -13,6 +42,36 @@ function findMiddle(head: ListNode) {
 	return slow;
 }
 
+/**
+ * Merges two sorted linked lists into a single sorted linked list.
+ *
+ * This function takes two already-sorted linked lists and combines them into
+ * one sorted list by comparing values from both lists and linking nodes in
+ * ascending order. This is the "conquer" step of the Merge Sort algorithm.
+ *
+ * The function maintains both `next` and `prev` pointers for doubly linked lists.
+ *
+ * Time Complexity: O(n + m) where n and m are the lengths of the two lists.
+ * Space Complexity: O(1) as we only rearrange existing nodes.
+ *
+ * @param list1 - The head of the first sorted linked list (or null).
+ * @param list2 - The head of the second sorted linked list (or null).
+ * @returns The head of the merged sorted linked list, or null if both inputs are null.
+ *
+ * @example
+ * // Merging two sorted lists
+ * // list1: 1 -> 3 -> 5
+ * // list2: 2 -> 4 -> 6
+ * // Result: 1 -> 2 -> 3 -> 4 -> 5 -> 6
+ * const merged = mergeLinkedList(list1, list2);
+ *
+ * @example
+ * // Merging with one empty list
+ * // list1: 1 -> 2 -> 3
+ * // list2: null
+ * // Result: 1 -> 2 -> 3
+ * const merged = mergeLinkedList(list1, null);
+ */
 function mergeLinkedList(list1: ListNode | null, list2: ListNode | null) {
 	if (!list1 && !list2) return null;
 	if (!list1) return list2;
@@ -21,17 +80,40 @@ function mergeLinkedList(list1: ListNode | null, list2: ListNode | null) {
 	const head = new ListNode(0, null, null);
 	let tail = head;
 
-	while (list1 && list2) {
-		if (list1.value < list2.value) {
-			tail.next = list1;
-			list1 = list1.next;
-		} else {
-			tail.next = list2;
-			list2 = list2.next;
-		}
+	let current1: ListNode | null = list1;
+	let current2: ListNode | null = list2;
 
-		tail.next;
+	while (current1 && current2) {
+		if (current1.value < current2.value) {
+			tail.next = current1;
+			current1.prev = tail;
+
+			tail = current1;
+			current1 = current1.next;
+		} else {
+			tail.next = current2;
+			current2.prev = tail;
+
+			tail = current2;
+			current2 = current2.next;
+		}
 	}
+
+	if (current1) {
+		tail.next = current1;
+
+		if (current1) {
+			current1.prev = tail;
+		}
+	} else if (current2) {
+		tail.next = current2;
+
+		if (current2) {
+			current2.prev = tail;
+		}
+	}
+
+	return head.next;
 }
 
 /**
@@ -73,9 +155,19 @@ function mergeLinkedList(list1: ListNode | null, list2: ListNode | null) {
  * @returns The head of the new linked list sorted in ascending order, or null if the input is null.
  */
 export function mergeSort(head: ListNode | null): ListNode | null {
-	if (!head) return head;
+	if (!head || !head.next) return head;
 
 	const middleNode = findMiddle(head);
 
-	return head;
+	const afterMiddle = middleNode?.next;
+	middleNode.next = null;
+
+	console.log({ head });
+
+	let left = mergeSort(head);
+	let right = mergeSort(afterMiddle);
+
+	const linkedListSorted = mergeLinkedList(left, right);
+
+	return linkedListSorted;
 }
