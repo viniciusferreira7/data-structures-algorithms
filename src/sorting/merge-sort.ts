@@ -162,8 +162,6 @@ export function mergeSort(head: ListNode | null): ListNode | null {
 	const afterMiddle = middleNode?.next;
 	middleNode.next = null;
 
-	console.log({ head });
-
 	let left = mergeSort(head);
 	let right = mergeSort(afterMiddle);
 

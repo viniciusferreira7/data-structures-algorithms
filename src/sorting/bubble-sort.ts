@@ -33,28 +33,26 @@
  * @returns A new array containing the sorted elements in ascending order.
  */
 export function bubbleSort(arr: number[]): number[] {
-	if (arr.length <= 1) return arr;
+	if (arr.length < 1) return arr;
 
 	let size = arr.length;
 
 	let isSorted = true;
 
-	for (const _value in arr) {
-		for (let i = 0; i <= size - 1; i++) {
+	for (const _j in arr) {
+		for (let i = 0; i < size; i++) {
 			if (arr[i] > arr[i + 1]) {
 				isSorted = false;
 
-				let a = arr[i + 1];
-				let b = arr[i];
+				const temp = arr[i + 1];
 
-				arr.splice(i + 1, 1, b);
-				arr.splice(i, 1, a);
+				arr[i + 1] = arr[i];
+				arr[i] = temp;
 			}
 		}
+		if (isSorted) return arr;
 
-		if (isSorted) {
-			return arr;
-		}
+		size -= 1;
 	}
 
 	return arr;
