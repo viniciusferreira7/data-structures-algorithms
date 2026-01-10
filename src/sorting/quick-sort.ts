@@ -78,5 +78,3 @@ export function quickSort(
 
 	return arr;
 }
-
-console.log(quickSort([9, 5, 1, 4, 2, 8], 0, 5));

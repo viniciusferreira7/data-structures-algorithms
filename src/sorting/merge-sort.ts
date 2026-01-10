@@ -1,4 +1,5 @@
 import { ListNode } from "../linked-list/list-node";
+import { linkedListToArray } from "../linked-list/utils/linked-list-to-array";
 
 /**
  * Finds the middle node of a linked list using the slow and fast pointer technique.
@@ -27,14 +28,15 @@ import { ListNode } from "../linked-list/list-node";
  * // Returns node with value 2
  * const middle = findMiddle(head);
  */
-function findMiddle(head: ListNode) {
+function findMiddle(head: ListNode): ListNode {
 	let slow: ListNode = head;
-	let fast = head.next;
+	let fast: ListNode | null = head.next;
 
 	while (fast && fast.next) {
 		if (slow.next) {
 			slow = slow.next;
 		}
+
 		fast = fast.next;
 		fast = fast.next;
 	}
@@ -77,8 +79,8 @@ function mergeLinkedList(list1: ListNode | null, list2: ListNode | null) {
 	if (!list1) return list2;
 	if (!list2) return list1;
 
-	const head = new ListNode(0, null, null);
-	let tail = head;
+	const head: ListNode = new ListNode(0, null, null);
+	let tail: ListNode | null = head;
 
 	let current1: ListNode | null = list1;
 	let current2: ListNode | null = list2;
@@ -87,30 +89,22 @@ function mergeLinkedList(list1: ListNode | null, list2: ListNode | null) {
 		if (current1.value < current2.value) {
 			tail.next = current1;
 			current1.prev = tail;
-
-			tail = current1;
 			current1 = current1.next;
 		} else {
 			tail.next = current2;
 			current2.prev = tail;
-
-			tail = current2;
 			current2 = current2.next;
 		}
+
+		tail = tail.next;
 	}
 
 	if (current1) {
 		tail.next = current1;
+	}
 
-		if (current1) {
-			current1.prev = tail;
-		}
-	} else if (current2) {
+	if (current2) {
 		tail.next = current2;
-
-		if (current2) {
-			current2.prev = tail;
-		}
 	}
 
 	return head.next;
@@ -123,15 +117,15 @@ function mergeLinkedList(list1: ListNode | null, list2: ListNode | null) {
  * the linked list into two halves, sorting each half, and then merging the sorted halves
  * into a fully ordered list.
  *
- * Diferente de arrays, o Merge Sort é especialmente eficiente para listas ligadas,
- * pois não requer acesso direto por índice e consegue dividir e mesclar listas
- * apenas manipulando ponteiros — resultando em um algoritmo muito performático.
+ * Unlike arrays, Merge Sort is especially efficient for linked lists,
+ * as it does not require direct index access and can split and merge lists
+ * by simply manipulating pointers — resulting in a highly performant algorithm.
  *
- * Este algoritmo sempre roda em **O(n log n)** para o tempo e em **O(log n)** de espaço
- * por conta da recursão (em listas ligadas não há necessidade de arrays auxiliares grandes).
+ * This algorithm always runs in **O(n log n)** time and **O(log n)** space
+ * due to recursion (for linked lists, there is no need for large auxiliary arrays).
  *
- * A função recebe o nó inicial da lista ligada e retorna a nova cabeça (head)
- * da lista já ordenada.
+ * The function receives the starting node of the linked list and returns
+ * the new head of the already sorted list.
  *
  * @example
  * // Example 1: Sorting a linked list with unsorted values
@@ -157,15 +151,15 @@ function mergeLinkedList(list1: ListNode | null, list2: ListNode | null) {
 export function mergeSort(head: ListNode | null): ListNode | null {
 	if (!head || !head.next) return head;
 
-	const middleNode = findMiddle(head);
+	const middle: ListNode | null = findMiddle(head);
 
-	const afterMiddle = middleNode?.next;
-	middleNode.next = null;
+	const afterMiddle = middle.next;
+	middle.next = null;
 
-	let left = mergeSort(head);
-	let right = mergeSort(afterMiddle);
+	const list1 = mergeSort(head);
+	const list2 = mergeSort(afterMiddle);
 
-	const linkedListSorted = mergeLinkedList(left, right);
+	const sorted = mergeLinkedList(list1, list2);
 
-	return linkedListSorted;
+	return sorted;
 }
