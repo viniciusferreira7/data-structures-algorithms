@@ -2,7 +2,7 @@ import { describe, expect, it } from "bun:test";
 import { bubbleSort } from "./bubble-sort";
 
 describe("bubbleSort", () => {
-	it.only("should sort an unsorted array in ascending order", () => {
+	it("should sort an unsorted array in ascending order", () => {
 		const result = bubbleSort([5, 1, 4, 2, 8]);
 		expect(result).toEqual([1, 2, 4, 5, 8]);
 	});
