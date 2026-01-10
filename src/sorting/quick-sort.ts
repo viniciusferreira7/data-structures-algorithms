@@ -46,33 +46,37 @@ export function quickSort(
 	if (arr.length <= 1) return arr;
 
 	if (left < right) {
-		const pi = partition(arr, left, right);
+		const p1 = partition(left, right, arr);
 
-		quickSort(arr, left, pi - 1);
-		quickSort(arr, pi + 1, right);
+		quickSort(arr, left, p1 - 1);
+		quickSort(arr, p1 + 1, right);
+	}
+
+	function partition(left: number, right: number, arr: number[]): number {
+		const pi = right;
+
+		let i = left - 1;
+
+		for (let j = left; j < right; j++) {
+			if (arr[j] <= arr[pi]) {
+				i++;
+
+				const temp = arr[j];
+
+				arr[j] = arr[i];
+				arr[i] = temp;
+			}
+		}
+
+		const temp = arr[i + 1];
+
+		arr[i + 1] = arr[pi];
+		arr[pi] = temp;
+
+		return i + 1;
 	}
 
 	return arr;
 }
 
-function partition(arr: number[], left: number, right: number): number {
-	const pivot = arr[right];
-
-	let i = left - 1;
-
-	for (let j = left; j < right; j++) {
-		if (arr[j] <= pivot) {
-			i++;
-
-			const tmp = arr[i];
-			arr[i] = arr[j];
-			arr[j] = tmp;
-		}
-	}
-
-	const tmp = arr[i + 1];
-	arr[i + 1] = arr[right];
-	arr[right] = tmp;
-
-	return i + 1;
-}
+console.log(quickSort([9, 5, 1, 4, 2, 8], 0, 5));

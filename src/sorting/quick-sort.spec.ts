@@ -3,7 +3,7 @@ import { quickSort } from "./quick-sort";
 
 describe("quickSort", () => {
 	it("should sort an unsorted array in ascending order", () => {
-		const result = quickSort([5, 9, 1, 4, 2, 8], 0, 5);
+		const result = quickSort([9, 5, 1, 4, 2, 8], 0, 5);
 		expect(result).toEqual([1, 2, 4, 5, 8, 9]);
 	});
 
