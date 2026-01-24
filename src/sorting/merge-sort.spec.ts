@@ -8,6 +8,7 @@ describe("mergeSort", () => {
 		const head = arrayToLinkedList([4, 2, 1, 3]);
 		const sortedHead = mergeSort(head);
 		const result = linkedListToArray(sortedHead);
+		console.log({ result });
 		expect(result).toEqual([1, 2, 3, 4]);
 	});
 

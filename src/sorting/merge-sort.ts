@@ -29,19 +29,18 @@ import { linkedListToArray } from "../linked-list/utils/linked-list-to-array";
  * const middle = findMiddle(head);
  */
 function findMiddle(head: ListNode): ListNode {
-	let slow: ListNode = head;
-	let fast: ListNode | null = head.next;
+	let s: ListNode = head;
+	let f: ListNode | null = head.next;
 
-	while (fast && fast.next) {
-		if (slow.next) {
-			slow = slow.next;
+	while (f && f.next) {
+		if (s.next) {
+			s = s.next;
 		}
 
-		fast = fast.next;
-		fast = fast.next;
+		f = f.next.next;
 	}
 
-	return slow;
+	return s;
 }
 
 /**
@@ -76,16 +75,22 @@ function findMiddle(head: ListNode): ListNode {
  */
 function mergeLinkedList(list1: ListNode | null, list2: ListNode | null) {
 	if (!list1 && !list2) return null;
+
 	if (!list1) return list2;
 	if (!list2) return list1;
 
-	const head: ListNode = new ListNode(0, null, null);
-	let tail: ListNode | null = head;
+	const head = new ListNode(0, null, null);
+	let tail: ListNode = head;
 
 	let current1: ListNode | null = list1;
 	let current2: ListNode | null = list2;
 
 	while (current1 && current2) {
+		console.log({
+			cur1: linkedListToArray(current1),
+			cur2: linkedListToArray(current2),
+		});
+
 		if (current1.value < current2.value) {
 			tail.next = current1;
 			current1.prev = tail;
@@ -101,10 +106,12 @@ function mergeLinkedList(list1: ListNode | null, list2: ListNode | null) {
 
 	if (current1) {
 		tail.next = current1;
+	} else if (current2) {
+		tail.next = current2;
 	}
 
-	if (current2) {
-		tail.next = current2;
+	if (head.next?.prev) {
+		head.next.prev = null;
 	}
 
 	return head.next;
@@ -149,12 +156,18 @@ function mergeLinkedList(list1: ListNode | null, list2: ListNode | null) {
  * @returns The head of the new linked list sorted in ascending order, or null if the input is null.
  */
 export function mergeSort(head: ListNode | null): ListNode | null {
-	if (!head || !head.next) return head;
+	if (!head) return null;
 
-	const middle: ListNode | null = findMiddle(head);
+	if (!head.next) return head;
+
+	const middle = findMiddle(head);
 
 	const afterMiddle = middle.next;
 	middle.next = null;
+
+	if (afterMiddle?.prev) {
+		afterMiddle.prev = null;
+	}
 
 	const list1 = mergeSort(head);
 	const list2 = mergeSort(afterMiddle);
