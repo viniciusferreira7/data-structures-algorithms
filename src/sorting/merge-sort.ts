@@ -86,11 +86,6 @@ function mergeLinkedList(list1: ListNode | null, list2: ListNode | null) {
 	let current2: ListNode | null = list2;
 
 	while (current1 && current2) {
-		console.log({
-			cur1: linkedListToArray(current1),
-			cur2: linkedListToArray(current2),
-		});
-
 		if (current1.value < current2.value) {
 			tail.next = current1;
 			current1.prev = tail;

@@ -30,6 +30,17 @@ A collection of algorithm implementations in **TypeScript**, focusing on clarity
 * [🔗 **Maximum Length Substring**](src/array/two-pointer/sliding-window/maximum-length-substring-with-two-occurrences.ts) - Find max substring with at most 2 occurrences
 * [🔗 **Contains Nearby Duplicate**](src/array/two-pointer/sliding-window/contains-nearby-duplicate.ts) - Detect duplicates within distance k
 
+### Binary Algorithms
+* [🔗 **Missing Number**](src/binary/missing-number.ts) - Find the missing number in array containing n distinct numbers in range [0, n] (O(n) time, O(1) space)
+
+### Tree Data Structures
+
+#### Binary Search Tree
+* [🔗 **Binary Tree Implementation**](src/binary-tree/binary-tree-implementation.ts) - Binary search tree with insert, search, and traversal operations
+  - Insert values maintaining BST property (O(log n) average, O(n) worst case)
+  - Search for values efficiently (O(log n) average, O(n) worst case)
+  - In-order traversal returning sorted values (O(n) time)
+
 ### Linked List Algorithms & Data Structures
 
 #### Core Data Structures
