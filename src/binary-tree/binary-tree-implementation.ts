@@ -163,4 +163,41 @@ export class BinaryTree {
 			return this.searchRecursively(value, currentNode.left);
 		else return this.searchRecursively(value, currentNode.right);
 	}
+
+	/**
+	 * Performs a pre-order traversal of the tree (root, left, right)
+	 *
+	 * Pre-order traversal visits nodes in the following order:
+	 * 1. Visit the root node
+	 * 2. Traverse the left subtree
+	 * 3. Traverse the right subtree
+	 *
+	 * This traversal is useful for creating a copy of the tree or getting prefix expression.
+	 *
+	 * @returns An array of values in pre-order sequence
+	 */
+	public preOrderTraversal(): number[] {
+		const result: number[] = [];
+
+		this.preOrderTraversalRecursively(result, this.root);
+
+		return result;
+	}
+
+	/**
+	 * Recursively performs pre-order traversal
+	 *
+	 * @param result - Array to collect values in pre-order
+	 * @param currentNode - The current node being visited
+	 */
+	private preOrderTraversalRecursively(
+		result: number[],
+		currentNode: BinaryNode | null,
+	) {
+		if (currentNode) {
+			result.push(currentNode.value);
+			this.preOrderTraversalRecursively(result, currentNode.left);
+			this.preOrderTraversalRecursively(result, currentNode.right);
+		}
+	}
 }

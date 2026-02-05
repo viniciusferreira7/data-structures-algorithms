@@ -591,72 +591,635 @@ describe("BinaryTree", () => {
 		});
 	});
 
-	// describe("inOrderTraversal", () => {
-	// 	it("should return an empty array for an empty tree", () => {
-	// 		const tree = new BinaryTree();
+	describe("preOrderTraversal", () => {
+		it("should return an empty array for an empty tree", () => {
+			const tree = new BinaryTree();
 
-	// 		expect(tree.inOrderTraversal()).toEqual([]);
-	// 	});
+			expect(tree.preOrderTraversal()).toEqual([]);
+		});
 
-	// 	it("should return a single value for a tree with one node", () => {
-	// 		const tree = new BinaryTree();
-	// 		tree.insert(10);
+		it("should return a single value for a tree with one node", () => {
+			const tree = new BinaryTree();
+			tree.insert(10);
 
-	// 		expect(tree.inOrderTraversal()).toEqual([10]);
-	// 	});
+			expect(tree.preOrderTraversal()).toEqual([10]);
+		});
 
-	// 	it("should return values in sorted order", () => {
-	// 		const tree = new BinaryTree();
-	// 		tree.insert(10);
-	// 		tree.insert(5);
-	// 		tree.insert(15);
-	// 		tree.insert(3);
-	// 		tree.insert(7);
-	// 		tree.insert(12);
-	// 		tree.insert(20);
+		it("should return values in pre-order (root, left, right)", () => {
+			const tree = new BinaryTree();
+			tree.insert(10);
+			tree.insert(5);
+			tree.insert(15);
 
-	// 		expect(tree.inOrderTraversal()).toEqual([3, 5, 7, 10, 12, 15, 20]);
-	// 	});
+			// Tree structure:
+			//     10
+			//    /  \
+			//   5    15
+			// Pre-order: root first, then left subtree, then right subtree
+			expect(tree.preOrderTraversal()).toEqual([10, 5, 15]);
+		});
 
-	// 	it("should return sorted values even when inserted in random order", () => {
-	// 		const tree = new BinaryTree();
-	// 		const values = [50, 30, 70, 20, 40, 60, 80, 10, 25, 35, 45];
-	// 		values.forEach((v) => tree.insert(v));
+		it("should traverse complex balanced tree in pre-order", () => {
+			const tree = new BinaryTree();
+			tree.insert(10);
+			tree.insert(5);
+			tree.insert(15);
+			tree.insert(3);
+			tree.insert(7);
+			tree.insert(12);
+			tree.insert(20);
 
-	// 		expect(tree.inOrderTraversal()).toEqual([10, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80]);
-	// 	});
+			// Tree structure:
+			//        10
+			//       /  \
+			//      5    15
+			//     / \   / \
+			//    3   7 12  20
+			// Pre-order: 10, 5, 3, 7, 15, 12, 20
+			expect(tree.preOrderTraversal()).toEqual([10, 5, 3, 7, 15, 12, 20]);
+		});
 
-	// 	it("should handle negative numbers in sorted order", () => {
-	// 		const tree = new BinaryTree();
-	// 		tree.insert(0);
-	// 		tree.insert(-10);
-	// 		tree.insert(10);
-	// 		tree.insert(-5);
-	// 		tree.insert(5);
+		it("should handle left-skewed tree in pre-order", () => {
+			const tree = new BinaryTree();
+			tree.insert(50);
+			tree.insert(40);
+			tree.insert(30);
+			tree.insert(20);
+			tree.insert(10);
 
-	// 		expect(tree.inOrderTraversal()).toEqual([-10, -5, 0, 5, 10]);
-	// 	});
+			// Tree structure (left-skewed):
+			//     50
+			//    /
+			//   40
+			//  /
+			// 30
+			// /
+			// 20
+			// /
+			// 10
+			// Pre-order: root first, then keep going left
+			expect(tree.preOrderTraversal()).toEqual([50, 40, 30, 20, 10]);
+		});
 
-	// 	it("should handle left-skewed tree", () => {
-	// 		const tree = new BinaryTree();
-	// 		tree.insert(50);
-	// 		tree.insert(40);
-	// 		tree.insert(30);
-	// 		tree.insert(20);
-	// 		tree.insert(10);
+		it("should handle right-skewed tree in pre-order", () => {
+			const tree = new BinaryTree();
+			tree.insert(10);
+			tree.insert(20);
+			tree.insert(30);
+			tree.insert(40);
+			tree.insert(50);
 
-	// 		expect(tree.inOrderTraversal()).toEqual([10, 20, 30, 40, 50]);
-	// 	});
+			// Tree structure (right-skewed):
+			// 10
+			//   \
+			//    20
+			//      \
+			//       30
+			//         \
+			//          40
+			//            \
+			//             50
+			// Pre-order: root first, then keep going right
+			expect(tree.preOrderTraversal()).toEqual([10, 20, 30, 40, 50]);
+		});
 
-	// 	it("should handle right-skewed tree", () => {
-	// 		const tree = new BinaryTree();
-	// 		tree.insert(10);
-	// 		tree.insert(20);
-	// 		tree.insert(30);
-	// 		tree.insert(40);
-	// 		tree.insert(50);
+		it("should handle tree with only left children", () => {
+			const tree = new BinaryTree();
+			tree.insert(100);
+			tree.insert(50);
+			tree.insert(25);
+			tree.insert(12);
 
-	// 		expect(tree.inOrderTraversal()).toEqual([10, 20, 30, 40, 50]);
-	// 	});
-	// });
+			// Tree structure:
+			//    100
+			//    /
+			//   50
+			//  /
+			// 25
+			// /
+			// 12
+			expect(tree.preOrderTraversal()).toEqual([100, 50, 25, 12]);
+		});
+
+		it("should handle tree with only right children", () => {
+			const tree = new BinaryTree();
+			tree.insert(10);
+			tree.insert(20);
+			tree.insert(30);
+			tree.insert(40);
+
+			// Tree structure:
+			// 10
+			//   \
+			//    20
+			//      \
+			//       30
+			//         \
+			//          40
+			expect(tree.preOrderTraversal()).toEqual([10, 20, 30, 40]);
+		});
+
+		it("should handle negative numbers in pre-order", () => {
+			const tree = new BinaryTree();
+			tree.insert(0);
+			tree.insert(-10);
+			tree.insert(10);
+			tree.insert(-5);
+			tree.insert(5);
+
+			// Tree structure:
+			//       0
+			//      / \
+			//   -10   10
+			//     \   /
+			//     -5  5
+			// Pre-order: 0, -10, -5, 10, 5
+			expect(tree.preOrderTraversal()).toEqual([0, -10, -5, 10, 5]);
+		});
+
+		it("should handle deeply nested tree in pre-order", () => {
+			const tree = new BinaryTree();
+			const values = [50, 30, 70, 20, 40, 60, 80, 10, 25, 35, 45];
+			values.forEach((v) => tree.insert(v));
+
+			// Tree structure:
+			//           50
+			//          /  \
+			//        30    70
+			//       / \    / \
+			//     20  40  60  80
+			//    / \  / \
+			//  10 25 35 45
+			// Pre-order: 50, 30, 20, 10, 25, 40, 35, 45, 70, 60, 80
+			expect(tree.preOrderTraversal()).toEqual([
+				50, 30, 20, 10, 25, 40, 35, 45, 70, 60, 80,
+			]);
+		});
+
+		it("should handle asymmetric tree with more left nodes", () => {
+			const tree = new BinaryTree();
+			tree.insert(50);
+			tree.insert(30);
+			tree.insert(70);
+			tree.insert(20);
+			tree.insert(40);
+			tree.insert(10);
+			tree.insert(25);
+			tree.insert(35);
+
+			// Tree structure:
+			//         50
+			//        /  \
+			//      30    70
+			//     / \
+			//   20  40
+			//   / \  /
+			// 10 25 35
+			// Pre-order: 50, 30, 20, 10, 25, 40, 35, 70
+			expect(tree.preOrderTraversal()).toEqual([
+				50, 30, 20, 10, 25, 40, 35, 70,
+			]);
+		});
+
+		it("should handle asymmetric tree with more right nodes", () => {
+			const tree = new BinaryTree();
+			tree.insert(50);
+			tree.insert(30);
+			tree.insert(70);
+			tree.insert(60);
+			tree.insert(80);
+			tree.insert(65);
+			tree.insert(75);
+			tree.insert(90);
+
+			// Tree structure:
+			//       50
+			//      /  \
+			//    30    70
+			//         / \
+			//       60  80
+			//         \  / \
+			//        65 75 90
+			// Pre-order: 50, 30, 70, 60, 65, 80, 75, 90
+			expect(tree.preOrderTraversal()).toEqual([
+				50, 30, 70, 60, 65, 80, 75, 90,
+			]);
+		});
+
+		it("should handle complex multi-level tree", () => {
+			const tree = new BinaryTree();
+			tree.insert(50);
+			tree.insert(25);
+			tree.insert(75);
+			tree.insert(12);
+			tree.insert(37);
+			tree.insert(62);
+			tree.insert(87);
+			tree.insert(6);
+			tree.insert(18);
+			tree.insert(31);
+			tree.insert(43);
+
+			// Tree structure:
+			//           50
+			//          /  \
+			//        25    75
+			//       / \    / \
+			//     12  37  62  87
+			//    / \  / \
+			//   6 18 31 43
+			// Pre-order: 50, 25, 12, 6, 18, 37, 31, 43, 75, 62, 87
+			expect(tree.preOrderTraversal()).toEqual([
+				50, 25, 12, 6, 18, 37, 31, 43, 75, 62, 87,
+			]);
+		});
+
+		it("should handle tree with two nodes - left child", () => {
+			const tree = new BinaryTree();
+			tree.insert(10);
+			tree.insert(5);
+
+			expect(tree.preOrderTraversal()).toEqual([10, 5]);
+		});
+
+		it("should handle tree with two nodes - right child", () => {
+			const tree = new BinaryTree();
+			tree.insert(10);
+			tree.insert(15);
+
+			expect(tree.preOrderTraversal()).toEqual([10, 15]);
+		});
+
+		it("should handle tree with three levels on left side only", () => {
+			const tree = new BinaryTree();
+			tree.insert(30);
+			tree.insert(20);
+			tree.insert(10);
+			tree.insert(25);
+
+			// Tree structure:
+			//     30
+			//    /
+			//   20
+			//  / \
+			// 10  25
+			expect(tree.preOrderTraversal()).toEqual([30, 20, 10, 25]);
+		});
+
+		it("should handle tree with three levels on right side only", () => {
+			const tree = new BinaryTree();
+			tree.insert(10);
+			tree.insert(20);
+			tree.insert(15);
+			tree.insert(25);
+
+			// Tree structure:
+			// 10
+			//   \
+			//    20
+			//   / \
+			// 15  25
+			expect(tree.preOrderTraversal()).toEqual([10, 20, 15, 25]);
+		});
+
+		it("should handle large balanced tree with 15 nodes", () => {
+			const tree = new BinaryTree();
+			const values = [
+				50, 25, 75, 12, 37, 62, 87, 6, 18, 31, 43, 56, 68, 81, 93,
+			];
+			values.forEach((v) => tree.insert(v));
+
+			// Tree structure (4 levels, perfectly balanced):
+			//              50
+			//           /      \
+			//         25        75
+			//        /  \      /  \
+			//      12   37    62   87
+			//     / \   / \   / \  / \
+			//    6 18 31 43 56 68 81 93
+			expect(tree.preOrderTraversal()).toEqual([
+				50, 25, 12, 6, 18, 37, 31, 43, 75, 62, 56, 68, 87, 81, 93,
+			]);
+		});
+
+		it("should handle zigzag pattern tree", () => {
+			const tree = new BinaryTree();
+			tree.insert(50);
+			tree.insert(30);
+			tree.insert(70);
+			tree.insert(35);
+			tree.insert(65);
+			tree.insert(32);
+			tree.insert(67);
+
+			// Tree structure (zigzag - right of left, left of right):
+			//       50
+			//      /  \
+			//    30    70
+			//      \   /
+			//      35 65
+			//      /   \
+			//    32     67
+			expect(tree.preOrderTraversal()).toEqual([50, 30, 35, 32, 70, 65, 67]);
+		});
+
+		it("should handle deeply nested left path", () => {
+			const tree = new BinaryTree();
+			tree.insert(100);
+			tree.insert(90);
+			tree.insert(80);
+			tree.insert(70);
+			tree.insert(60);
+			tree.insert(50);
+			tree.insert(40);
+
+			// 7 levels deep on left
+			expect(tree.preOrderTraversal()).toEqual([100, 90, 80, 70, 60, 50, 40]);
+		});
+
+		it("should handle deeply nested right path", () => {
+			const tree = new BinaryTree();
+			tree.insert(10);
+			tree.insert(20);
+			tree.insert(30);
+			tree.insert(40);
+			tree.insert(50);
+			tree.insert(60);
+			tree.insert(70);
+
+			// 7 levels deep on right
+			expect(tree.preOrderTraversal()).toEqual([10, 20, 30, 40, 50, 60, 70]);
+		});
+
+		it("should handle mixed positive and negative values", () => {
+			const tree = new BinaryTree();
+			tree.insert(0);
+			tree.insert(-20);
+			tree.insert(20);
+			tree.insert(-30);
+			tree.insert(-10);
+			tree.insert(10);
+			tree.insert(30);
+			tree.insert(-5);
+			tree.insert(5);
+
+			// Tree structure:
+			//           0
+			//        /     \
+			//     -20       20
+			//     / \       / \
+			//  -30  -10   10  30
+			//        /     \
+			//      -5       5
+			expect(tree.preOrderTraversal()).toEqual([
+				0, -20, -30, -10, -5, 20, 10, 5, 30,
+			]);
+		});
+
+		it("should handle sequential right insertions from left subtree", () => {
+			const tree = new BinaryTree();
+			tree.insert(50);
+			tree.insert(30);
+			tree.insert(70);
+			tree.insert(40);
+			tree.insert(45);
+			tree.insert(47);
+
+			// Tree structure:
+			//     50
+			//    /  \
+			//  30    70
+			//    \
+			//    40
+			//      \
+			//      45
+			//        \
+			//        47
+			expect(tree.preOrderTraversal()).toEqual([50, 30, 40, 45, 47, 70]);
+		});
+
+		it("should handle sequential left insertions from right subtree", () => {
+			const tree = new BinaryTree();
+			tree.insert(50);
+			tree.insert(30);
+			tree.insert(70);
+			tree.insert(60);
+			tree.insert(55);
+			tree.insert(52);
+
+			// Tree structure:
+			//       50
+			//      /  \
+			//    30    70
+			//          /
+			//        60
+			//        /
+			//      55
+			//      /
+			//    52
+			expect(tree.preOrderTraversal()).toEqual([50, 30, 70, 60, 55, 52]);
+		});
+
+		it("should handle complete binary tree (all levels filled)", () => {
+			const tree = new BinaryTree();
+			tree.insert(40);
+			tree.insert(20);
+			tree.insert(60);
+			tree.insert(10);
+			tree.insert(30);
+			tree.insert(50);
+			tree.insert(70);
+			tree.insert(5);
+			tree.insert(15);
+
+			// Tree structure (complete):
+			//          40
+			//        /    \
+			//      20      60
+			//     / \     /  \
+			//   10  30  50   70
+			//   / \
+			//  5  15
+			expect(tree.preOrderTraversal()).toEqual([
+				40, 20, 10, 5, 15, 30, 60, 50, 70,
+			]);
+		});
+
+		it("should handle tree with only left child at each level", () => {
+			const tree = new BinaryTree();
+			tree.insert(80);
+			tree.insert(60);
+			tree.insert(40);
+			tree.insert(20);
+
+			// Tree structure:
+			//   80
+			//  /
+			// 60
+			// /
+			// 40
+			// /
+			// 20
+			expect(tree.preOrderTraversal()).toEqual([80, 60, 40, 20]);
+		});
+
+		it("should handle tree with only right child at each level", () => {
+			const tree = new BinaryTree();
+			tree.insert(20);
+			tree.insert(40);
+			tree.insert(60);
+			tree.insert(80);
+
+			// Tree structure:
+			// 20
+			//   \
+			//   40
+			//     \
+			//     60
+			//       \
+			//       80
+			expect(tree.preOrderTraversal()).toEqual([20, 40, 60, 80]);
+		});
+
+		it("should handle sparse left, dense right tree", () => {
+			const tree = new BinaryTree();
+			tree.insert(50);
+			tree.insert(30);
+			tree.insert(70);
+			tree.insert(60);
+			tree.insert(80);
+			tree.insert(55);
+			tree.insert(65);
+			tree.insert(75);
+			tree.insert(85);
+			tree.insert(90);
+
+			// Tree structure:
+			//         50
+			//        /  \
+			//      30    70
+			//           / \
+			//         60  80
+			//        / \  / \
+			//      55 65 75 85
+			//                \
+			//                90
+			expect(tree.preOrderTraversal()).toEqual([
+				50, 30, 70, 60, 55, 65, 80, 75, 85, 90,
+			]);
+		});
+
+		it("should handle dense left, sparse right tree", () => {
+			const tree = new BinaryTree();
+			tree.insert(50);
+			tree.insert(30);
+			tree.insert(70);
+			tree.insert(20);
+			tree.insert(40);
+			tree.insert(10);
+			tree.insert(25);
+			tree.insert(35);
+			tree.insert(45);
+			tree.insert(5);
+
+			// Tree structure:
+			//          50
+			//        /    \
+			//      30      70
+			//     / \
+			//   20  40
+			//   / \ / \
+			// 10 25 35 45
+			// /
+			// 5
+			expect(tree.preOrderTraversal()).toEqual([
+				50, 30, 20, 10, 5, 25, 40, 35, 45, 70,
+			]);
+		});
+
+		it("should handle alternating left-right deep insertions", () => {
+			const tree = new BinaryTree();
+			tree.insert(50);
+			tree.insert(25);
+			tree.insert(75);
+			tree.insert(12);
+			tree.insert(87);
+			tree.insert(6);
+			tree.insert(93);
+			tree.insert(3);
+
+			// Tree structure (alternates):
+			//         50
+			//        /  \
+			//      25    75
+			//     /        \
+			//   12          87
+			//   /             \
+			//  6               93
+			//  /
+			// 3
+			expect(tree.preOrderTraversal()).toEqual([50, 25, 12, 6, 3, 75, 87, 93]);
+		});
+
+		it("should handle tree with very small values", () => {
+			const tree = new BinaryTree();
+			tree.insert(5);
+			tree.insert(3);
+			tree.insert(7);
+			tree.insert(1);
+			tree.insert(4);
+			tree.insert(6);
+			tree.insert(9);
+			tree.insert(2);
+
+			// Tree structure:
+			//       5
+			//      / \
+			//     3   7
+			//    / \ / \
+			//   1  4 6  9
+			//    \
+			//     2
+			expect(tree.preOrderTraversal()).toEqual([5, 3, 1, 2, 4, 7, 6, 9]);
+		});
+
+		it("should handle tree with large values (thousands)", () => {
+			const tree = new BinaryTree();
+			tree.insert(5000);
+			tree.insert(2500);
+			tree.insert(7500);
+			tree.insert(1250);
+			tree.insert(3750);
+			tree.insert(6250);
+			tree.insert(8750);
+
+			// Tree structure:
+			//         5000
+			//        /    \
+			//     2500    7500
+			//     /  \    /  \
+			//  1250 3750 6250 8750
+			expect(tree.preOrderTraversal()).toEqual([
+				5000, 2500, 1250, 3750, 7500, 6250, 8750,
+			]);
+		});
+
+		it("should handle tree with random insertion order", () => {
+			const tree = new BinaryTree();
+			const values = [45, 23, 67, 12, 89, 34, 56, 78, 90];
+			values.forEach((v) => tree.insert(v));
+
+			// Tree built from: [45, 23, 67, 12, 89, 34, 56, 78, 90]
+			//         45
+			//        /  \
+			//      23    67
+			//     / \     / \
+			//   12  34  56  89
+			//              /  \
+			//            78   90
+			expect(tree.preOrderTraversal()).toEqual([
+				45, 23, 12, 34, 67, 56, 89, 78, 90,
+			]);
+		});
+	});
 });
