@@ -200,4 +200,41 @@ export class BinaryTree {
 			this.preOrderTraversalRecursively(result, currentNode.right);
 		}
 	}
+
+	/**
+	 * Performs an info-order traversal of the tree
+	 *
+	 * This traversal collects values of nodes that don't have a left child.
+	 * It's useful for identifying leaf nodes and nodes with only right children.
+	 *
+	 * @returns An array of values from nodes without left children
+	 */
+	public inOrderTraversal() {
+		const result: number[] = [];
+
+		return result;
+	}
+
+	/**
+	 * Recursively performs info-order traversal
+	 *
+	 * Collects values from nodes that don't have a left child,
+	 * then continues traversing both left and right subtrees.
+	 *
+	 * @param result - Array to collect values from nodes without left children
+	 * @param currentNode - The current node being visited
+	 */
+	private inOrderTraversalRecursively(
+		result: number[],
+		currentNode: BinaryNode | null,
+	) {
+		if (currentNode) {
+			if (!currentNode.left) {
+				result.push(currentNode.value);
+			}
+
+			this.inOrderTraversalRecursively(result, currentNode.left);
+			this.inOrderTraversalRecursively(result, currentNode.right);
+		}
+	}
 }
