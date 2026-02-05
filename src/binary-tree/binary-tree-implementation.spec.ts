@@ -1223,23 +1223,23 @@ describe("BinaryTree", () => {
 		});
 	});
 
-	describe("postOrderTraversal", () => {
+	describe("inOrderTraversal", () => {
 		it("should return an empty array for an empty tree", () => {
 			const tree = new BinaryTree();
 
-			expect(tree.postOrderTraversal()).toEqual([]);
+			expect(tree.inOrderTraversal()).toEqual([]);
 		});
 
-		it("should return empty array for a tree with one node", () => {
+		it("should return a single value for a tree with one node", () => {
 			const tree = new BinaryTree();
 			tree.insert(10);
 
-			// Single node has no right child
-			// Expected: []
-			expect(tree.postOrderTraversal()).toEqual([]);
+			// Tree: 10
+			// In-order: [10]
+			expect(tree.inOrderTraversal()).toEqual([10]);
 		});
 
-		it("should return nodes with only right children in simple tree", () => {
+		it("should return values in sorted order for simple balanced tree", () => {
 			const tree = new BinaryTree();
 			tree.insert(10);
 			tree.insert(5);
@@ -1249,32 +1249,28 @@ describe("BinaryTree", () => {
 			//     10
 			//    /  \
 			//   5    15
-			// No nodes have only right child
-			// Expected: []
-			expect(tree.postOrderTraversal()).toEqual([]);
+			// In-order (left, root, right): [5, 10, 15]
+			expect(tree.inOrderTraversal()).toEqual([5, 10, 15]);
 		});
 
-		it("should handle right-skewed tree", () => {
+		it("should return sorted values for balanced tree", () => {
 			const tree = new BinaryTree();
 			tree.insert(10);
+			tree.insert(5);
+			tree.insert(15);
+			tree.insert(3);
+			tree.insert(7);
+			tree.insert(12);
 			tree.insert(20);
-			tree.insert(30);
-			tree.insert(40);
-			tree.insert(50);
 
-			// Tree structure (right-skewed):
-			// 10
-			//   \
-			//    20
-			//      \
-			//       30
-			//         \
-			//          40
-			//            \
-			//             50
-			// Nodes with only right child: 10, 20, 30, 40
-			// Expected: [10, 20, 30, 40]
-			expect(tree.postOrderTraversal()).toEqual([10, 20, 30, 40]);
+			// Tree structure:
+			//        10
+			//       /  \
+			//      5    15
+			//     / \   / \
+			//    3   7 12  20
+			// In-order: [3, 5, 7, 10, 12, 15, 20] (sorted)
+			expect(tree.inOrderTraversal()).toEqual([3, 5, 7, 10, 12, 15, 20]);
 		});
 
 		it("should handle left-skewed tree", () => {
@@ -1295,117 +1291,19 @@ describe("BinaryTree", () => {
 			// 20
 			// /
 			// 10
-			// No nodes have only right child
-			// Expected: []
-			expect(tree.postOrderTraversal()).toEqual([]);
+			// In-order: [10, 20, 30, 40, 50] (sorted)
+			expect(tree.inOrderTraversal()).toEqual([10, 20, 30, 40, 50]);
 		});
 
-		it("should handle tree with only right children", () => {
-			const tree = new BinaryTree();
-			tree.insert(10);
-			tree.insert(20);
-			tree.insert(30);
-
-			// Tree structure:
-			// 10
-			//   \
-			//    20
-			//      \
-			//       30
-			// Nodes with only right child: 10, 20
-			// Expected: [10, 20]
-			expect(tree.postOrderTraversal()).toEqual([10, 20]);
-		});
-
-		it("should handle tree with only left children", () => {
-			const tree = new BinaryTree();
-			tree.insert(30);
-			tree.insert(20);
-			tree.insert(10);
-
-			// Tree structure:
-			//   30
-			//  /
-			// 20
-			// /
-			// 10
-			// No nodes have only right child
-			// Expected: []
-			expect(tree.postOrderTraversal()).toEqual([]);
-		});
-
-		it("should handle balanced tree", () => {
-			const tree = new BinaryTree();
-			tree.insert(10);
-			tree.insert(5);
-			tree.insert(15);
-			tree.insert(3);
-			tree.insert(7);
-			tree.insert(12);
-			tree.insert(20);
-
-			// Tree structure:
-			//        10
-			//       /  \
-			//      5    15
-			//     / \   / \
-			//    3   7 12  20
-			// No nodes have only right child
-			// Expected: []
-			expect(tree.postOrderTraversal()).toEqual([]);
-		});
-
-		it("should handle tree with some nodes having only right child", () => {
-			const tree = new BinaryTree();
-			tree.insert(50);
-			tree.insert(30);
-			tree.insert(70);
-			tree.insert(35);
-			tree.insert(80);
-
-			// Tree structure:
-			//       50
-			//      /  \
-			//    30    70
-			//      \     \
-			//      35    80
-			// Nodes with only right child: 30, 70
-			// Expected: [30, 70]
-			expect(tree.postOrderTraversal()).toEqual([30, 70]);
-		});
-
-		it("should handle zigzag pattern with right-only nodes", () => {
-			const tree = new BinaryTree();
-			tree.insert(50);
-			tree.insert(30);
-			tree.insert(70);
-			tree.insert(35);
-			tree.insert(65);
-			tree.insert(67);
-
-			// Tree structure:
-			//       50
-			//      /  \
-			//    30    70
-			//      \   /
-			//      35 65
-			//           \
-			//           67
-			// Nodes with only right child: 30, 65
-			// Expected: [30, 65]
-			expect(tree.postOrderTraversal()).toEqual([30, 65]);
-		});
-
-		it("should handle deeply nested right path", () => {
+		it("should handle right-skewed tree", () => {
 			const tree = new BinaryTree();
 			tree.insert(10);
 			tree.insert(20);
 			tree.insert(30);
 			tree.insert(40);
 			tree.insert(50);
-			tree.insert(60);
 
-			// Tree structure:
+			// Tree structure (right-skewed):
 			// 10
 			//   \
 			//    20
@@ -1415,45 +1313,66 @@ describe("BinaryTree", () => {
 			//          40
 			//            \
 			//             50
-			//               \
-			//                60
-			// All nodes except 60 have only right child
-			// Expected: [10, 20, 30, 40, 50]
-			expect(tree.postOrderTraversal()).toEqual([10, 20, 30, 40, 50]);
+			// In-order: [10, 20, 30, 40, 50] (sorted)
+			expect(tree.inOrderTraversal()).toEqual([10, 20, 30, 40, 50]);
 		});
 
-		it("should handle tree with mixed nodes", () => {
+		it("should return sorted values when inserted in random order", () => {
 			const tree = new BinaryTree();
-			tree.insert(50);
-			tree.insert(25);
-			tree.insert(75);
-			tree.insert(12);
-			tree.insert(37);
-			tree.insert(87);
+			const values = [50, 30, 70, 20, 40, 60, 80, 10, 25, 35, 45];
+			values.forEach((v) => tree.insert(v));
 
 			// Tree structure:
-			//         50
-			//        /  \
-			//      25    75
-			//     / \      \
-			//   12  37     87
-			// Nodes with only right child: 75
-			// Expected: [75]
-			expect(tree.postOrderTraversal()).toEqual([75]);
+			//           50
+			//          /  \
+			//        30    70
+			//       / \    / \
+			//     20  40  60  80
+			//    / \  / \
+			//  10 25 35 45
+			// In-order always produces sorted array for BST
+			expect(tree.inOrderTraversal()).toEqual([
+				10, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80,
+			]);
 		});
 
-		it("should handle tree with two nodes - right child", () => {
+		it("should handle negative numbers in sorted order", () => {
 			const tree = new BinaryTree();
+			tree.insert(0);
+			tree.insert(-10);
 			tree.insert(10);
-			tree.insert(15);
+			tree.insert(-5);
+			tree.insert(5);
 
 			// Tree structure:
-			// 10
-			//   \
-			//    15
-			// Node with only right child: 10
-			// Expected: [10]
-			expect(tree.postOrderTraversal()).toEqual([10]);
+			//       0
+			//      / \
+			//   -10   10
+			//     \   /
+			//     -5  5
+			// In-order: [-10, -5, 0, 5, 10] (sorted)
+			expect(tree.inOrderTraversal()).toEqual([-10, -5, 0, 5, 10]);
+		});
+
+		it("should handle complex balanced tree", () => {
+			const tree = new BinaryTree();
+			const values = [
+				50, 25, 75, 12, 37, 62, 87, 6, 18, 31, 43, 56, 68, 81, 93,
+			];
+			values.forEach((v) => tree.insert(v));
+
+			// Tree structure:
+			//              50
+			//           /      \
+			//         25        75
+			//        /  \      /  \
+			//      12   37    62   87
+			//     / \   / \   / \  / \
+			//    6 18 31 43 56 68 81 93
+			// In-order produces sorted array
+			expect(tree.inOrderTraversal()).toEqual([
+				6, 12, 18, 25, 31, 37, 43, 50, 56, 62, 68, 75, 81, 87, 93,
+			]);
 		});
 
 		it("should handle tree with two nodes - left child", () => {
@@ -1461,36 +1380,45 @@ describe("BinaryTree", () => {
 			tree.insert(10);
 			tree.insert(5);
 
-			// Tree structure:
+			// Tree:
 			//   10
 			//  /
 			// 5
-			// No nodes have only right child
-			// Expected: []
-			expect(tree.postOrderTraversal()).toEqual([]);
+			// In-order: [5, 10]
+			expect(tree.inOrderTraversal()).toEqual([5, 10]);
 		});
 
-		it("should handle asymmetric tree with right-only nodes", () => {
+		it("should handle tree with two nodes - right child", () => {
 			const tree = new BinaryTree();
-			tree.insert(50);
-			tree.insert(30);
-			tree.insert(70);
+			tree.insert(10);
+			tree.insert(15);
+
+			// Tree:
+			// 10
+			//   \
+			//    15
+			// In-order: [10, 15]
+			expect(tree.inOrderTraversal()).toEqual([10, 15]);
+		});
+
+		it("should handle mixed positive and negative values", () => {
+			const tree = new BinaryTree();
+			tree.insert(0);
+			tree.insert(-20);
 			tree.insert(20);
-			tree.insert(40);
-			tree.insert(80);
-			tree.insert(45);
+			tree.insert(-30);
+			tree.insert(-10);
+			tree.insert(10);
+			tree.insert(30);
 
 			// Tree structure:
-			//         50
-			//        /  \
-			//      30    70
-			//     / \      \
-			//   20  40     80
-			//         \
-			//         45
-			// Nodes with only right child: 70, 40
-			// Expected: [40, 70]
-			expect(tree.postOrderTraversal()).toEqual([40, 70]);
+			//         0
+			//       /   \
+			//     -20    20
+			//     / \    / \
+			//  -30 -10 10  30
+			// In-order: [-30, -20, -10, 0, 10, 20, 30] (sorted)
+			expect(tree.inOrderTraversal()).toEqual([-30, -20, -10, 0, 10, 20, 30]);
 		});
 
 		it("should handle complete binary tree", () => {
@@ -1509,163 +1437,283 @@ describe("BinaryTree", () => {
 			//     20    60
 			//    / \   / \
 			//  10  30 50  70
-			// No nodes have only right child
-			// Expected: []
-			expect(tree.postOrderTraversal()).toEqual([]);
+			// In-order: [10, 20, 30, 40, 50, 60, 70] (sorted)
+			expect(tree.inOrderTraversal()).toEqual([10, 20, 30, 40, 50, 60, 70]);
 		});
 
-		it("should handle alternating left-right pattern", () => {
-			const tree = new BinaryTree();
-			tree.insert(50);
-			tree.insert(25);
-			tree.insert(75);
-			tree.insert(12);
-			tree.insert(87);
-			tree.insert(93);
-
-			// Tree structure:
-			//         50
-			//        /  \
-			//      25    75
-			//     /        \
-			//   12          87
-			//                \
-			//                93
-			// Nodes with only right child: 75, 87
-			// Traversal order: pre-order style (check node, left, right)
-			// Expected: [75, 87]
-			expect(tree.postOrderTraversal()).toEqual([75, 87]);
-		});
-
-		it("should handle tree with negative numbers", () => {
-			const tree = new BinaryTree();
-			tree.insert(0);
-			tree.insert(-10);
-			tree.insert(10);
-			tree.insert(-5);
-			tree.insert(15);
-
-			// Tree structure:
-			//       0
-			//      / \
-			//   -10   10
-			//     \     \
-			//     -5    15
-			// Nodes with only right child: -10, 10
-			// Expected: [-10, 10]
-			expect(tree.postOrderTraversal()).toEqual([-10, 10]);
-		});
-
-		it("should handle large tree with multiple right-only nodes", () => {
-			const tree = new BinaryTree();
-			tree.insert(50);
-			tree.insert(25);
-			tree.insert(75);
-			tree.insert(12);
-			tree.insert(30);
-			tree.insert(60);
-			tree.insert(87);
-			tree.insert(35);
-			tree.insert(65);
-			tree.insert(90);
-
-			// Tree structure:
-			//           50
-			//          /  \
-			//        25    75
-			//       / \    / \
-			//     12  30  60  87
-			//           \   \   \
-			//           35  65  90
-			// Nodes with only right child: 30, 60, 87
-			// Expected: [30, 60, 87]
-			expect(tree.postOrderTraversal()).toEqual([30, 60, 87]);
-		});
-
-		it("should handle tree with sequential right insertions", () => {
-			const tree = new BinaryTree();
-			tree.insert(10);
-			tree.insert(5);
-			tree.insert(15);
-			tree.insert(20);
-			tree.insert(25);
-			tree.insert(30);
-
-			// Tree structure:
-			//     10
-			//    /  \
-			//   5    15
-			//          \
-			//           20
-			//             \
-			//              25
-			//                \
-			//                 30
-			// Nodes with only right child: 15, 20, 25
-			// Expected: [15, 20, 25]
-			expect(tree.postOrderTraversal()).toEqual([15, 20, 25]);
-		});
-
-		it("should handle sparse tree with right-only branches", () => {
+		it("should handle asymmetric tree", () => {
 			const tree = new BinaryTree();
 			tree.insert(50);
 			tree.insert(30);
 			tree.insert(70);
+			tree.insert(20);
+			tree.insert(40);
+			tree.insert(10);
+			tree.insert(25);
 			tree.insert(35);
-			tree.insert(80);
-			tree.insert(37);
-			tree.insert(85);
 
 			// Tree structure:
 			//         50
 			//        /  \
 			//      30    70
-			//        \     \
-			//        35    80
-			//          \     \
-			//          37    85
-			// Nodes with only right child: 30, 35, 70, 80
-			// Traversal order: pre-order style (check node, left, right)
-			// Expected: [30, 35, 70, 80]
-			expect(tree.postOrderTraversal()).toEqual([30, 35, 70, 80]);
+			//     / \
+			//   20  40
+			//   / \  /
+			// 10 25 35
+			// In-order: [10, 20, 25, 30, 35, 40, 50, 70] (sorted)
+			expect(tree.inOrderTraversal()).toEqual([10, 20, 25, 30, 35, 40, 50, 70]);
 		});
 
-		it("should handle tree with very small values", () => {
-			const tree = new BinaryTree();
-			tree.insert(5);
-			tree.insert(3);
-			tree.insert(7);
-			tree.insert(4);
-			tree.insert(9);
-
-			// Tree structure:
-			//       5
-			//      / \
-			//     3   7
-			//      \   \
-			//      4   9
-			// Nodes with only right child: 3, 7
-			// Expected: [3, 7]
-			expect(tree.postOrderTraversal()).toEqual([3, 7]);
-		});
-
-		it("should handle tree with large values", () => {
+		it("should handle large values", () => {
 			const tree = new BinaryTree();
 			tree.insert(5000);
 			tree.insert(2500);
 			tree.insert(7500);
+			tree.insert(1250);
 			tree.insert(3750);
+			tree.insert(6250);
 			tree.insert(8750);
 
 			// Tree structure:
 			//         5000
 			//        /    \
 			//     2500    7500
-			//        \       \
-			//       3750    8750
-			// Nodes with only right child: 2500, 7500
-			// Expected: [2500, 7500]
-			expect(tree.postOrderTraversal()).toEqual([2500, 7500]);
+			//     /  \    /  \
+			//  1250 3750 6250 8750
+			// In-order: [1250, 2500, 3750, 5000, 6250, 7500, 8750] (sorted)
+			expect(tree.inOrderTraversal()).toEqual([
+				1250, 2500, 3750, 5000, 6250, 7500, 8750,
+			]);
+		});
+
+		it("should always return sorted array regardless of insertion order", () => {
+			const tree = new BinaryTree();
+			const values = [45, 23, 67, 12, 89, 34, 56, 78, 90];
+			values.forEach((v) => tree.insert(v));
+
+			// Regardless of insertion order, in-order produces sorted array
+			const result = tree.inOrderTraversal();
+			const expected = [...values].sort((a, b) => a - b);
+
+			expect(result).toEqual(expected);
+			expect(result).toEqual([12, 23, 34, 45, 56, 67, 78, 89, 90]);
+		});
+	});
+
+	describe("postOrderTraversal", () => {
+		it("should return an empty array for an empty tree", () => {
+			const tree = new BinaryTree();
+
+			expect(tree.postOrderTraversal()).toEqual([]);
+		});
+
+		it("should return single value for a tree with one node", () => {
+			const tree = new BinaryTree();
+			tree.insert(10);
+
+			// Tree: 10
+			// Post-order: [10]
+			expect(tree.postOrderTraversal()).toEqual([10]);
+		});
+
+		it("should return values in post-order for simple balanced tree", () => {
+			const tree = new BinaryTree();
+			tree.insert(10);
+			tree.insert(5);
+			tree.insert(15);
+
+			// Tree structure:
+			//     10
+			//    /  \
+			//   5    15
+			// Post-order (left, right, root): [5, 15, 10]
+			expect(tree.postOrderTraversal()).toEqual([5, 15, 10]);
+		});
+
+		it("should return values in post-order for balanced tree", () => {
+			const tree = new BinaryTree();
+			tree.insert(10);
+			tree.insert(5);
+			tree.insert(15);
+			tree.insert(3);
+			tree.insert(7);
+			tree.insert(12);
+			tree.insert(20);
+
+			// Tree structure:
+			//        10
+			//       /  \
+			//      5    15
+			//     / \   / \
+			//    3   7 12  20
+			// Post-order: [3, 7, 5, 12, 20, 15, 10]
+			expect(tree.postOrderTraversal()).toEqual([3, 7, 5, 12, 20, 15, 10]);
+		});
+
+		it("should handle left-skewed tree", () => {
+			const tree = new BinaryTree();
+			tree.insert(50);
+			tree.insert(40);
+			tree.insert(30);
+			tree.insert(20);
+			tree.insert(10);
+
+			// Tree structure (left-skewed):
+			//     50
+			//    /
+			//   40
+			//  /
+			// 30
+			// /
+			// 20
+			// /
+			// 10
+			// Post-order: [10, 20, 30, 40, 50]
+			expect(tree.postOrderTraversal()).toEqual([10, 20, 30, 40, 50]);
+		});
+
+		it("should handle right-skewed tree", () => {
+			const tree = new BinaryTree();
+			tree.insert(10);
+			tree.insert(20);
+			tree.insert(30);
+			tree.insert(40);
+			tree.insert(50);
+
+			// Tree structure (right-skewed):
+			// 10
+			//   \
+			//    20
+			//      \
+			//       30
+			//         \
+			//          40
+			//            \
+			//             50
+			// Post-order: [50, 40, 30, 20, 10]
+			expect(tree.postOrderTraversal()).toEqual([50, 40, 30, 20, 10]);
+		});
+
+		it("should handle complex balanced tree", () => {
+			const tree = new BinaryTree();
+			const values = [50, 30, 70, 20, 40, 60, 80, 10, 25, 35, 45];
+			values.forEach((v) => tree.insert(v));
+
+			// Tree structure:
+			//           50
+			//          /  \
+			//        30    70
+			//       / \    / \
+			//     20  40  60  80
+			//    / \  / \
+			//  10 25 35 45
+			// Post-order: [10, 25, 20, 35, 45, 40, 30, 60, 80, 70, 50]
+			expect(tree.postOrderTraversal()).toEqual([
+				10, 25, 20, 35, 45, 40, 30, 60, 80, 70, 50,
+			]);
+		});
+
+		it("should handle negative numbers", () => {
+			const tree = new BinaryTree();
+			tree.insert(0);
+			tree.insert(-10);
+			tree.insert(10);
+			tree.insert(-5);
+			tree.insert(5);
+
+			// Tree structure:
+			//       0
+			//      / \
+			//   -10   10
+			//     \   /
+			//     -5  5
+			// Post-order: [-5, -10, 5, 10, 0]
+			expect(tree.postOrderTraversal()).toEqual([-5, -10, 5, 10, 0]);
+		});
+
+		it("should handle tree with two nodes - left child", () => {
+			const tree = new BinaryTree();
+			tree.insert(10);
+			tree.insert(5);
+
+			// Tree:
+			//   10
+			//  /
+			// 5
+			// Post-order: [5, 10]
+			expect(tree.postOrderTraversal()).toEqual([5, 10]);
+		});
+
+		it("should handle tree with two nodes - right child", () => {
+			const tree = new BinaryTree();
+			tree.insert(10);
+			tree.insert(15);
+
+			// Tree:
+			// 10
+			//   \
+			//    15
+			// Post-order: [15, 10]
+			expect(tree.postOrderTraversal()).toEqual([15, 10]);
+		});
+
+		it("should handle complete binary tree", () => {
+			const tree = new BinaryTree();
+			tree.insert(40);
+			tree.insert(20);
+			tree.insert(60);
+			tree.insert(10);
+			tree.insert(30);
+			tree.insert(50);
+			tree.insert(70);
+
+			// Tree structure:
+			//        40
+			//       /  \
+			//     20    60
+			//    / \   / \
+			//  10  30 50  70
+			// Post-order: [10, 30, 20, 50, 70, 60, 40]
+			expect(tree.postOrderTraversal()).toEqual([10, 30, 20, 50, 70, 60, 40]);
+		});
+
+		it("should handle large balanced tree", () => {
+			const tree = new BinaryTree();
+			const values = [50, 25, 75, 12, 37, 62, 87, 6, 18, 31, 43, 56, 68, 81, 93];
+			values.forEach((v) => tree.insert(v));
+
+			// Tree structure:
+			//              50
+			//           /      \
+			//         25        75
+			//        /  \      /  \
+			//      12   37    62   87
+			//     / \   / \   / \  / \
+			//    6 18 31 43 56 68 81 93
+			// Post-order: [6, 18, 12, 31, 43, 37, 25, 56, 68, 62, 81, 93, 87, 75, 50]
+			expect(tree.postOrderTraversal()).toEqual([
+				6, 18, 12, 31, 43, 37, 25, 56, 68, 62, 81, 93, 87, 75, 50,
+			]);
+		});
+
+		it("should process children before parents", () => {
+			const tree = new BinaryTree();
+			tree.insert(50);
+			tree.insert(30);
+			tree.insert(70);
+			tree.insert(20);
+			tree.insert(40);
+
+			// Tree structure:
+			//       50
+			//      /  \
+			//    30    70
+			//   / \
+			// 20  40
+			// Post-order processes all children before parent
+			// 20, 40 processed before 30
+			// 30, 70 processed before 50
+			expect(tree.postOrderTraversal()).toEqual([20, 40, 30, 70, 50]);
 		});
 	});
 });

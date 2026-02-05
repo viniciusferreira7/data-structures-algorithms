@@ -202,14 +202,55 @@ export class BinaryTree {
 	}
 
 	/**
-	 * Performs a post-order traversal of the tree
+	 * Performs an in-order traversal of the tree (left, root, right)
 	 *
-	 * This traversal collects values of nodes that have a right child but no left child.
-	 * Useful for identifying nodes with only right subtrees.
+	 * In-order traversal visits nodes in the following order:
+	 * 1. Traverse the left subtree
+	 * 2. Visit the root node
+	 * 3. Traverse the right subtree
 	 *
-	 * @returns An array of values from nodes with only right children
+	 * For binary search trees, this produces values in sorted ascending order.
+	 *
+	 * @returns An array of values in sorted order (for BST)
 	 */
-	public postOrderTraversal() {
+	public inOrderTraversal(): number[] {
+		const result: number[] = [];
+
+		this.inOrderTraversalRecursively(result, this.root);
+
+		return result;
+	}
+
+	/**
+	 * Recursively performs in-order traversal
+	 *
+	 * @param result - Array to collect values in in-order
+	 * @param currentNode - The current node being visited
+	 */
+	private inOrderTraversalRecursively(
+		result: number[],
+		currentNode: BinaryNode | null,
+	) {
+		if (currentNode) {
+			this.inOrderTraversalRecursively(result, currentNode.left);
+			result.push(currentNode.value);
+			this.inOrderTraversalRecursively(result, currentNode.right);
+		}
+	}
+
+	/**
+	 * Performs a post-order traversal of the tree (left, right, root)
+	 *
+	 * Post-order traversal visits nodes in the following order:
+	 * 1. Traverse the left subtree
+	 * 2. Traverse the right subtree
+	 * 3. Visit the root node
+	 *
+	 * Useful for deleting trees, calculating subtree properties, and postfix expressions.
+	 *
+	 * @returns An array of values in post-order sequence
+	 */
+	public postOrderTraversal(): number[] {
 		const result: number[] = [];
 
 		this.postOrderTraversalRecursively(result, this.root);
@@ -220,10 +261,7 @@ export class BinaryTree {
 	/**
 	 * Recursively performs post-order traversal
 	 *
-	 * Collects values from nodes that have a right child but no left child,
-	 * then continues traversing both left and right subtrees.
-	 *
-	 * @param result - Array to collect values from nodes with only right children
+	 * @param result - Array to collect values in post-order
 	 * @param currentNode - The current node being visited
 	 */
 	private postOrderTraversalRecursively(
@@ -231,11 +269,9 @@ export class BinaryTree {
 		currentNode: BinaryNode | null,
 	) {
 		if (currentNode) {
-			if (!currentNode.left && currentNode.right) {
-				result.push(currentNode.value);
-			}
 			this.postOrderTraversalRecursively(result, currentNode.left);
 			this.postOrderTraversalRecursively(result, currentNode.right);
+			result.push(currentNode.value);
 		}
 	}
 }
