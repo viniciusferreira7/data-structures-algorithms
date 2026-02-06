@@ -1,3 +1,4 @@
+/** Node element for the linked list */
 export class Node {
 	constructor(
 		public value: number,
@@ -5,15 +6,18 @@ export class Node {
 	) {}
 }
 
+/** Stack implementation using a singly linked list (LIFO) */
 export class StackLinkedList {
 	private _size = 0;
 
 	constructor(private top: Node | null) {}
 
+	/** Returns the number of elements in the stack */
 	get size() {
 		return this._size;
 	}
 
+	/** Pushes a value onto the top of the stack */
 	public push(value: number) {
 		if (!this.top) {
 			this.top = new Node(value, null);
@@ -25,6 +29,7 @@ export class StackLinkedList {
 		this._size += 1;
 	}
 
+	/** Removes and returns the top value, or null if the stack is empty */
 	public pop() {
 		if (!this.top) return null;
 
@@ -35,6 +40,7 @@ export class StackLinkedList {
 		return popNode.value;
 	}
 
+	/** Returns the top value without removing it, or null if the stack is empty */
 	public peek() {
 		if (!this.top) return null;
 
