@@ -1,9 +1,5 @@
 export class MinHeap {
-	private heap: number[];
-
-	constructor() {
-		this.heap = [];
-	}
+	private heap: number[] = [];
 
 	private leftChild(index: number) {
 		return index * 2 + 1;
@@ -18,43 +14,47 @@ export class MinHeap {
 	}
 
 	private heapifyUp(index: number) {
-		if (index === 0) return;
+		let current = index;
 
-		const parentIndex = this.parent(index);
+		while (current > 0) {
+			const parentIndex = this.parent(current);
 
-		if (this.heap[index] < this.heap[parentIndex]) {
-			const temp = this.heap[parentIndex];
+			if (this.heap[parentIndex] <= this.heap[current]) break;
 
-			this.heap[parentIndex] = this.heap[index];
-			this.heap[index] = temp;
+			[this.heap[parentIndex], this.heap[current]] = [
+				this.heap[current],
+				this.heap[parentIndex],
+			];
 
-			this.heapifyUp(parentIndex);
+			current = parentIndex;
 		}
 	}
 
 	private heapifyDown(index: number) {
-		const size = this.heap.length;
+		let currentIndex = index;
+		const length = this.heap.length;
 
-		const left = this.leftChild(index);
-		const right = this.rightChild(index);
+		while (true) {
+			const leftIndex = this.leftChild(currentIndex);
+			const rightIndex = this.rightChild(currentIndex);
+			let smallest = currentIndex;
 
-		let smallestItemIndex = index;
+			if (leftIndex < length && this.heap[leftIndex] < this.heap[smallest]) {
+				smallest = leftIndex;
+			}
 
-		if (left < size && this.heap[left] < this.heap[smallestItemIndex]) {
-			smallestItemIndex = left;
-		}
+			if (rightIndex < length && this.heap[rightIndex] < this.heap[smallest]) {
+				smallest = rightIndex;
+			}
 
-		if (right < size && this.heap[right] < this.heap[smallestItemIndex]) {
-			smallestItemIndex = right;
-		}
+			if (smallest === currentIndex) break;
 
-		if (smallestItemIndex !== index) {
-			const temp = this.heap[index];
+			[this.heap[currentIndex], this.heap[smallest]] = [
+				this.heap[smallest],
+				this.heap[currentIndex],
+			];
 
-			this.heap[index] = this.heap[smallestItemIndex];
-			this.heap[smallestItemIndex] = temp;
-
-			this.heapifyDown(smallestItemIndex);
+			currentIndex = smallest;
 		}
 	}
 
@@ -65,20 +65,16 @@ export class MinHeap {
 	}
 
 	public popMin() {
-		if (this.heap.length === 0) return null;
+		if (!this.heap.length) return null;
 
-		if (this.heap.length === 1) {
-			return this.heap.pop();
+		const min = this.heap[0];
+		const last = this.heap.pop()!;
+
+		if (this.heap.length) {
+			this.heap[0] = last;
+			this.heapifyDown(0);
 		}
 
-		const root = this.heap[0];
-
-		const lastItem = this.heap.pop();
-
-		if (lastItem) this.heap[0] = lastItem;
-
-		this.heapifyDown(0);
-
-		return root;
+		return min;
 	}
 }
