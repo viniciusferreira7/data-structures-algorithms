@@ -40,6 +40,17 @@ A collection of algorithm implementations in **TypeScript**, focusing on clarity
   - Insert values maintaining BST property (O(log n) average, O(n) worst case)
   - Search for values efficiently (O(log n) average, O(n) worst case)
   - In-order traversal returning sorted values (O(n) time)
+* [🔗 **Build Binary Tree from Traversals**](src/binary-tree/build-a-binary-tree-through-traverse.ts) - Reconstruct a binary tree from pre-order/post-order and in-order traversal sequences
+
+### Stack Data Structures
+* [🔗 **Stack (Array)**](src/stack/stack-array.ts) - Stack implementation using array with LIFO behavior (push, pop, peek, isFull, isEmpty)
+* [🔗 **Stack (Linked List)**](src/stack/stack-linked-list.ts) - Stack implementation using singly linked list with LIFO behavior (push, pop, peek)
+
+### Heap Data Structures
+* [🔗 **Min Heap**](src/heap/min-heap.ts) - Min heap implementation with insert and popMin operations using heapify up/down (O(log n) insert/extract)
+
+### Trie Data Structure
+* [🔗 **Trie**](src/trie/trie.ts) - Prefix tree implementation with insert, search, and startsWith operations
 
 ### Linked List Algorithms & Data Structures
 
