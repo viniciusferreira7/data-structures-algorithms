@@ -19,7 +19,7 @@ export class Trie {
 		let node = this.root;
 
 		for (const char of word) {
-			if (!node.children.get(char)) {
+			if (!node.children.has(char)) {
 				node.children.set(char, new TrieNode());
 			}
 			node = node.children.get(char)!;

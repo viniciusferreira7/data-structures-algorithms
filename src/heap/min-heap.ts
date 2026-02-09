@@ -1,60 +1,30 @@
 export class MinHeap {
 	private heap: number[] = [];
 
-	private leftChild(index: number) {
+	private left(index: number) {
 		return index * 2 + 1;
 	}
-
-	private rightChild(index: number) {
+	private right(index: number) {
 		return index * 2 + 2;
 	}
-
 	private parent(index: number) {
 		return Math.floor((index - 1) / 2);
 	}
 
 	private heapifyUp(index: number) {
-		let current = index;
+		let currentIdx = index;
 
-		while (current > 0) {
-			const parentIndex = this.parent(current);
+		while (currentIdx > 0) {
+			const parentIdx = this.parent(currentIdx);
 
-			if (this.heap[parentIndex] <= this.heap[current]) break;
+			if (this.heap[parentIdx] <= this.heap[currentIdx]) break;
 
-			[this.heap[parentIndex], this.heap[current]] = [
-				this.heap[current],
-				this.heap[parentIndex],
+			[this.heap[parentIdx], this.heap[currentIdx]] = [
+				this.heap[currentIdx],
+				this.heap[parentIdx],
 			];
 
-			current = parentIndex;
-		}
-	}
-
-	private heapifyDown(index: number) {
-		let currentIndex = index;
-		const length = this.heap.length;
-
-		while (true) {
-			const leftIndex = this.leftChild(currentIndex);
-			const rightIndex = this.rightChild(currentIndex);
-			let smallest = currentIndex;
-
-			if (leftIndex < length && this.heap[leftIndex] < this.heap[smallest]) {
-				smallest = leftIndex;
-			}
-
-			if (rightIndex < length && this.heap[rightIndex] < this.heap[smallest]) {
-				smallest = rightIndex;
-			}
-
-			if (smallest === currentIndex) break;
-
-			[this.heap[currentIndex], this.heap[smallest]] = [
-				this.heap[smallest],
-				this.heap[currentIndex],
-			];
-
-			currentIndex = smallest;
+			currentIdx = parentIdx;
 		}
 	}
 
@@ -64,17 +34,47 @@ export class MinHeap {
 		this.heapifyUp(this.heap.length - 1);
 	}
 
-	public popMin() {
-		if (!this.heap.length) return null;
+	private heapifyDown(index: number) {
+		let currentIdx = index;
+		const length = this.heap.length;
 
-		const min = this.heap[0];
-		const last = this.heap.pop()!;
+		while (true) {
+			const leftIdx = this.left(currentIdx);
+			const rightIdx = this.right(currentIdx);
+
+			let smallest = currentIdx;
+
+			if (leftIdx < length && this.heap[leftIdx] < this.heap[smallest]) {
+				smallest = leftIdx;
+			}
+
+			if (rightIdx < length && this.heap[rightIdx] < this.heap[smallest]) {
+				smallest = rightIdx;
+			}
+
+			if (currentIdx === smallest) break;
+
+			[this.heap[currentIdx], this.heap[smallest]] = [
+				this.heap[smallest],
+				this.heap[currentIdx],
+			];
+
+			currentIdx = smallest;
+		}
+	}
+
+	public popMin() {
+		if (this.heap.length === 0) return null;
+
+		const root = this.heap[0];
+
+		const lastItem = this.heap.pop();
 
 		if (this.heap.length) {
-			this.heap[0] = last;
+			this.heap[0] = lastItem!;
 			this.heapifyDown(0);
 		}
 
-		return min;
+		return root;
 	}
 }
