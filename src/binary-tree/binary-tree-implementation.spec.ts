@@ -1679,7 +1679,9 @@ describe("BinaryTree", () => {
 
 		it("should handle large balanced tree", () => {
 			const tree = new BinaryTree();
-			const values = [50, 25, 75, 12, 37, 62, 87, 6, 18, 31, 43, 56, 68, 81, 93];
+			const values = [
+				50, 25, 75, 12, 37, 62, 87, 6, 18, 31, 43, 56, 68, 81, 93,
+			];
 			values.forEach((v) => tree.insert(v));
 
 			// Tree structure:
